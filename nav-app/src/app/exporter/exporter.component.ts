@@ -37,6 +37,9 @@ export class ExporterComponent implements OnInit {
             "orientation": "landscape",
             "size": "letter",
 
+            "fontSize": 4,
+            "autofitTextSize": true,
+
             "showSubtechniques": "expanded",
 
             "font": 'sans-serif',
@@ -711,8 +714,18 @@ export class ExporterComponent implements OnInit {
             .each(function() { centerValign(this); })
     
         // Set technique and subtechnique groups to the same font size
-        techniqueGroups.select("text").attr("font-size", minCellTextSize)
-        subtechniqueGroups.select("text").attr("font-size", minCellTextSize)
+        if (this.config.autofitTextSize) {
+            this.config.fontSize = minCellTextSize.toFixed(2)
+        }
+        if (this.config.autofitTextSize) {
+            techniqueGroups.select("text").attr("font-size", minCellTextSize)
+            subtechniqueGroups.select("text").attr("font-size", minCellTextSize)
+        }
+        else {
+            techniqueGroups.select("text").attr("font-size", this.config.fontSize)
+            subtechniqueGroups.select("text").attr("font-size", this.config.fontSize)
+        }
+
 
         // Track the smallest optimal tactic label font size
         let minTacticLabelTextSize = Infinity;
